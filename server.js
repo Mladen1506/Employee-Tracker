@@ -1,18 +1,41 @@
-const mysql = require('mysql2');
-const inquirer = require('inquirer');
-const cTable = require('console.table');
+const express = require('express');
 
-require('dotenv').config()
+const db = require('./db/connection');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.MYSQL_PASSWORD,
-    database: 'employee'
+
+const PORT = process.env.PORT || 3001;
+
+const app = express();
+
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+
+
+app.get('/', (req, res) => {
+    const sql = `SELECT * FROM departments`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: rows
+        });
+    });
 });
 
-connection.connect(err => {
-    if (err) throw err;
-    console.log('connected as id ' + connection.threadId);
-    afterConnection();
+
+
+
+app.use((req, res) => {
+    res.status(404).end();
+});
+
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
