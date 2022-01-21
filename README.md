@@ -21,7 +21,7 @@ This application will allow users to view, add, and edit employees, roles, depar
 View walk through video via [Screencastify]https://watch.screencastify.com/v/32iWbf8NWA9K8VFDZbVY
 
 ## License 
-This project is license under MIT
+This project is licensed under MIT
 
 ## Contributing 
 Contributors should read the installation section. 
